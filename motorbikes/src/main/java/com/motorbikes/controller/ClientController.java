@@ -33,7 +33,7 @@ public class ClientController {
     public List<Client> getAll(){
         return clientService.getAll();
     }
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public Optional<Client> get(@PathVariable("id") int clientId){
         return clientService.getClient(clientId);
     }

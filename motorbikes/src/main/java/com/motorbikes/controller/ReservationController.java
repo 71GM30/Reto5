@@ -39,7 +39,7 @@ public class ReservationController {
         return reservationService.getAll();
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public Optional<Reservation> get(@PathVariable("id") int reservationId){
         return reservationService.getReservation(reservationId);
     }

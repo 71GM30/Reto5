@@ -35,7 +35,7 @@ public class AdminController {
     public List<Admin> getAll(){
         return adminService.getAll();
     }
-     @GetMapping("/{id}")
+     @GetMapping("/get/{id}")
     public Optional<Admin> get(@PathVariable("id") int adminId){
         return adminService.getAdmin(adminId);
     }

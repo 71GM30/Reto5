@@ -33,7 +33,7 @@ public class CategoryController {
     public List<Category> getAll(){
         return categoryService.getAll();
     }
-     @GetMapping("/{id}")
+     @GetMapping("/get/{id}")
     public Optional<Category> get(@PathVariable("id") int categoryId){
         return categoryService.getCategory(categoryId);
     }
