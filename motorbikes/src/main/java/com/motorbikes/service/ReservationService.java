@@ -92,7 +92,7 @@ public class ReservationService {
      * @return 
      */
     public boolean delete(int reservationId) {
-        boolean status=false;
+        //boolean status=false;
         Boolean aBoolean = getReservation(reservationId).map(reservation -> {
             reservationRep.delete(reservation);
             return true;
@@ -142,3 +142,4 @@ public class ReservationService {
         }
 
 }
+
