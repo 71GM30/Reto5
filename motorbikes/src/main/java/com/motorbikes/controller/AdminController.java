@@ -3,6 +3,7 @@ package com.motorbikes.controller;
 import com.motorbikes.model.Admin;
 import com.motorbikes.service.AdminService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,6 +34,10 @@ public class AdminController {
     @GetMapping("/all")
     public List<Admin> getAll(){
         return adminService.getAll();
+    }
+     @GetMapping("/{id}")
+    public Optional<Admin> get(@PathVariable("id") int adminId){
+        return adminService.getAdmin(adminId);
     }
     /**
      * 

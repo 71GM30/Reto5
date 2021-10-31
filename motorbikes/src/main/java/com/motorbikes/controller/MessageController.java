@@ -3,6 +3,7 @@ package com.motorbikes.controller;
 import com.motorbikes.model.Message;
 import com.motorbikes.service.MessageService;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -31,6 +32,11 @@ public class MessageController {
     @GetMapping("/all")
     public List<Message> getAll(){
         return messageService.getAll();
+    }
+    
+    @GetMapping("/{id}")
+    public Optional<Message> get(@PathVariable("id") int messageId){
+        return messageService.getMessage(messageId);
     }
     
     @PostMapping("/save")

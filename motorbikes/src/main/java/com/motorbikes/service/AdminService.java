@@ -20,6 +20,11 @@ public class AdminService {
        return adminRepository.getAll();
     }
     
+         public Optional<Admin> getAdmin(int adminId) {
+        return adminRepository.getAdmin(adminId);
+    }
+
+    
     public Admin save(Admin admin) {
         if (admin.getIdAdmin() == null) {
             return adminRepository.save(admin);

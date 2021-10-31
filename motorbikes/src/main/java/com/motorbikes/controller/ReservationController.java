@@ -8,6 +8,7 @@ import com.motorbikes.model.Reservation;
 import com.motorbikes.service.ReservationService;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,6 +37,11 @@ public class ReservationController {
     @GetMapping("/all")
     public List<Reservation> getAll(){
         return reservationService.getAll();
+    }
+    
+    @GetMapping("/{id}")
+    public Optional<Reservation> get(@PathVariable("id") int reservationId){
+        return reservationService.getReservation(reservationId);
     }
     
     @PostMapping("/save")
