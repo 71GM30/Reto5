@@ -34,7 +34,7 @@ public class ReservationRepository {
     }
     
     public void delete(Reservation reservation){
-        reservationCrudRepository.save(reservation);
+        reservationCrudRepository.delete(reservation);
     }
     
     public List<Reservation> ReservacionStatusRepositorio (String status){
