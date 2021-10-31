@@ -1,8 +1,5 @@
 package com.motorbikes.service;
-
 import com.motorbikes.custom.CountClient;
-import com.motorbikes.custom.CountReservation;
-import com.motorbikes.custom.DescriptionAmount;
 import com.motorbikes.custom.StatusReservation;
 import com.motorbikes.model.Reservation;
 import com.motorbikes.repository.ReservationRepository;
@@ -24,14 +21,14 @@ public class ReservationService {
      * objeto repositorio reserva
      */
     @Autowired
-    private ReservationRepository reservationRepository;
+    private ReservationRepository reservationRep; 
  
     /**
      * obtener todos
      * @return 
      */
     public List<Reservation> getAll(){
-       return reservationRepository.getAll();
+       return reservationRep.getAll();
     }
     
     /**
@@ -40,7 +37,7 @@ public class ReservationService {
      * @return 
      */
     public Optional<Reservation> getReservation(int reservationId) {
-        return reservationRepository.getReservation(reservationId);
+        return reservationRep.getReservation(reservationId);
     }
     
     /**
@@ -50,11 +47,11 @@ public class ReservationService {
      */
     public Reservation save(Reservation reservation) {
         if (reservation.getIdReservation() == null) {
-            return reservationRepository.save(reservation);
+            return reservationRep.save(reservation);
         } else {
-            Optional<Reservation> reservationUno = reservationRepository.getReservation(reservation.getIdReservation());
+            Optional<Reservation> reservationUno = reservationRep.getReservation(reservation.getIdReservation());
             if (reservationUno.isEmpty()) {
-                return reservationRepository.save(reservation);
+                return reservationRep.save(reservation);
             } else {
                 return reservation;
             }
@@ -68,7 +65,7 @@ public class ReservationService {
      */
     public Reservation update(Reservation reservation){
         if(reservation.getIdReservation()!=null){
-            Optional<Reservation> evento= reservationRepository.getReservation(reservation.getIdReservation());
+            Optional<Reservation> evento= reservationRep.getReservation(reservation.getIdReservation());
             if(!evento.isEmpty()){
 
                 if(reservation.getStartDate()!=null){
@@ -80,7 +77,7 @@ public class ReservationService {
                 if(reservation.getStatus()!=null){
                     evento.get().setStatus(reservation.getStatus());
                 }
-                reservationRepository.save(evento.get());
+                reservationRep.save(evento.get());
                 return evento.get();
             }else{
                 return reservation;
@@ -95,20 +92,29 @@ public class ReservationService {
      * @return 
      */
     public boolean delete(int reservationId) {
+        boolean status=false;
         Boolean aBoolean = getReservation(reservationId).map(reservation -> {
-            reservationRepository.delete(reservation);
+            reservationRep.delete(reservation);
             return true;
         }).orElse(false);
-        return aBoolean;
+        return false; //revisar
     }
-    
+    /**
+     * 
+     * @return 
+     */
     public StatusReservation reporteStatusServicio (){
-        List<Reservation>completed= reservationRepository.ReservacionStatusRepositorio("completed");
-        List<Reservation>cancelled= reservationRepository.ReservacionStatusRepositorio("cancelled");
+        List<Reservation>completed= reservationRep.ReservacionStatusRepositorio("completed");
+        List<Reservation>cancelled= reservationRep.ReservacionStatusRepositorio("cancelled");
         
         return new StatusReservation(completed.size(), cancelled.size() );
     }
-
+    /**
+     * 
+     * @param datoA
+     * @param datoB
+     * @return 
+     */
     public List<Reservation> reporteTiempoServicio (String datoA, String datoB){
         SimpleDateFormat parser = new SimpleDateFormat ("yyyy-MM-dd");
         
@@ -121,15 +127,18 @@ public class ReservationService {
         }catch(ParseException evt){
             evt.printStackTrace();
         }if(datoUno.before(datoDos)){
-            return reservationRepository.ReservacionTiempoRepositorio(datoUno, datoDos);
+            return reservationRep.ReservacionTiempoRepositorio(datoUno, datoDos);
         }else{
             return new ArrayList<>();
         
         } 
     }
-    
+    /**
+     * 
+     * @return 
+     */
     public List<CountClient> reporteClientesServicio(){
-            return reservationRepository.getClientesRepositorio();
+            return reservationRep.getClientesRepositorio();
         }
 
 }
