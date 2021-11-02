@@ -31,9 +31,7 @@
         
         $.get("/user",function(data){
             console.log(data.name.login)
-                $('#user').html(data.name.login);
-                $('.unauthenticated').hide();
-                $(".authenticated").show();
+                window.open('private.html','_self');
                                     });
                                     
            var logout = function() {
@@ -43,19 +41,6 @@
               $(".authenticated").hide();
             })
             return true;
-          }
-          function pedirunmilagro(){
-            $.ajax({
-        url:"http://localhost:8080/api/Motorbike/all",
-        type:"GET",
-        dataType:"JSON",
-        success:function(res){
-            console.log(res)
-        }, 
-        error: function (jqXHR, exception) {
-            console.log(jqXHR)
-        }
-    });
           }
     </script>
 </body>
