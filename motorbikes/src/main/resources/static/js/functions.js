@@ -1,4 +1,40 @@
 var urlgeneral="http://132.226.254.102:8080/api";
+var frmInformes="<h1>Informe por Fecha</h1>"+
+"<h3>porfavor seleccione la fecha de inicio y finalizacion de la consulta</h3>"+
+"<form id='frmInforme' action='javascript:informe()'>"+
+"  <div class='form-group'>"+
+     
+"  <div class='row'>"+
+"    <div class='col'>"+
+"      <div class='form-group'>"+
+"        <label for='fechainicial'>Fecha Inicial</label>"+
+"        <input type='date' class='form-control' name='fechainicial' id='fechainicial' required>"+
+"      </div>"+
+"    </div>"+
+"    <div class='col'>"+
+"      <div class='form-group'>"+
+"        <label for='fechainicial'>Fecha Final</label>"+
+"        <input type='date' class='form-control' name='fechafinal' id='fechafinal' required>"+
+"      </div>"+
+"    </div>"+
+"  </div><br><br>"+
+
+"  <button type='submit' class='btn btn-primary form-cotrol'>Consultar</button>"+
+  
+"  </div>"+
+"</form><br><br>"+
+
+"<div class='row'>"+
+"  <div class='col'>"+
+"    <label for=''>Reservas por estado</label><br>"+
+"    <button onclick='informeStatus()' class='btn btn-success form-cotrol'>Consultar</button>"+
+"  </div>"+
+"  <div class='col'>"+
+"    <label for=''>Top 3 de clietes</label><br>"+
+"    <button onclick='informeCliente()' class='btn btn-success form-cotrol'>Consultar</button>"+
+"  </div>"+
+"</div>";
+
 var frmMotos="<h1 class='mt-4'>Registrar Motocicleta</h1>"+
                 "<form id='regMoto' action='javascript:restAdd(\"regMoto\",\"moto\")'>"+
                 /*  
@@ -89,7 +125,7 @@ let frmCliente="<h1 class='mt-4'>Registrar Cliente</h1>"+
                   "<div class='form-group row'>"+
                   "    <label for='email' class='col-sm-2 col-form-label'>Correo</label>"+
                   "    <div class='col-sm-10'>"+
-                  "      <input type='email' class='form-control' id='email' name='email' placeholder='Email' maxlength='20' required>"+
+                  "      <input type='email' class='form-control' id='email' name='email' placeholder='Email' maxlength='45' required>"+
                   "    </div>"+
                   "</div>"+
                   "<div class='form-group row'>"+
@@ -107,6 +143,39 @@ let frmCliente="<h1 class='mt-4'>Registrar Cliente</h1>"+
                   "<button type='submit' id='btn' class='btn btn-primary'>Registrar</button>"+
                   "</form><br><br>"+
                   "<div id='tabla'></div>";
+
+let frmAdmin="<h1 class='mt-4'>Registrar Usuario</h1>"+
+                  "<form id='regUsuario' action='javascript:restAdd(\"regUsuario\",\"admin\")'>"+
+                  /*
+                    "<div class='form-group row'>"+
+                          "<label for='id' class='col-sm-2 col-form-label'>ID</label>"+
+                          "<div class='col-sm-10'>"+
+                          "      <input type='text' class='form-control' id='id' name='id' placeholder='ID' readonly required>"+
+                          "</div>"+
+                    "</div>"+
+                    */
+                    "<div class='form-group row'>"+
+                    "    <label for='email' class='col-sm-2 col-form-label'>Correo</label>"+
+                    "    <div class='col-sm-10'>"+
+                    "      <input type='email' class='form-control' id='email' name='email' placeholder='Email' maxlength='45' required>"+
+                    "    </div>"+
+                    "</div>"+
+                    "<div class='form-group row'>"+
+                    "    <label for='password' class='col-sm-2 col-form-label'>Password</label>"+
+                    "    <div class='col-sm-10'>"+
+                    "      <input type='password' class='form-control' id='password' name='password' placeholder='Password' maxlength='45' required>"+
+                    "    </div>"+
+                    "</div>"+
+                    "<div class='form-group row'>"+
+                    "    <label for='name' class='col-sm-2 col-form-label'>Nombre</label>"+
+                    "    <div class='col-sm-10'>"+
+                    "      <input type='text' class='form-control' id='name' name='name' maxlength='250' placeholder='Nombre' required>"+
+                    "    </div>"+
+                    "</div>"+
+                    "</div><br><br>"+
+                    "<button type='submit' id='btn' class='btn btn-primary'>Registrar</button>"+
+                    "</form><br><br>"+
+                    "<div id='tabla'></div>";
 
 var frmCategory="<h1 class='mt-4'>Registrar Categoria</h1>"+
 "<form id='frmcategory' action='javascript:restAdd(\"frmcategory\",\"category\")' >"+
@@ -130,23 +199,23 @@ var frmReserva="<h1 class='mt-4'>Agregar Reserva</h1>"+
 "                    <form id='frmreservation' action='javascript:restAdd(\"frmreservation\",\"reservation\")'>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Fecha inicial</label>"+
-"  <input type='date' class='form-control' name='startDate' id='startDate'>"+
+"  <input type='date' class='form-control' name='startDate' id='startDate' required>"+
 "</div>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Fecha Final</label>"+
-"  <input type='date' class='form-control' name='devolutionDate' id='devolutionDate'>"+
+"  <input type='date' class='form-control' name='devolutionDate' id='devolutionDate' required>"+
 "</div>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Clinte</label>"+
-"  <select class='form-control' name='client' id='client'></select>"+
+"  <select class='form-control' name='client' id='client' reuired></select>"+
 "</div>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Motocicleta a Reservar</label>"+
-"  <select class='form-control' name='motorbike' id='motorbike'></select>"+
+"  <select class='form-control' name='motorbike' id='motorbike' required></select>"+
 "</div>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Estado de la Reserva</label>"+
-"  <select  class='form-control'name='status' id='status'>"+
+"  <select  class='form-control'name='status' id='status' required>"+
 "    <option value='complete'>Realizado</option>"+
 "    <option value='canceled'>Cancelado</option>"+
 "    <option value='programed'>Programado</option>"+
@@ -162,11 +231,11 @@ var frmReservamod="<h1 class='mt-4'>Editar Reserva</h1>"+
 "                    <form id='frmreservationmod' action='javascript:restUpd(\"frmreservationmod\",\"reservation\")'>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Fecha inicial</label>"+
-"  <input type='date' class='form-control' name='startDate' id='startDate'>"+
+"  <input type='date' class='form-control' name='startDate' id='startDate' required>"+
 "</div>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Fecha Final</label>"+
-"  <input type='date' class='form-control' name='devolutionDate' id='devolutionDate'>"+
+"  <input type='date' class='form-control' name='devolutionDate' id='devolutionDate' required>"+
 "</div>"+
 "<div class='form-group'>"+
 "  <label for='starDate'>Clinte</label>"+
@@ -338,6 +407,42 @@ let frmClienteMod="<h1 class='mt-4'>Registrar Cliente</h1>"+
                 "</form><br><br>"+
                 "<div id='tabla'></div>";
 
+let frmAdminmod="<h1 class='mt-4'>Registrar Usuario</h1>"+
+                "<form id='regUsuariomod' action='javascript:restUpd(\"regUsuariomod\",\"admin\")'>"+
+                
+                  "<div class='form-group row'>"+
+                        "<label for='id' class='col-sm-2 col-form-label'>ID</label>"+
+                        "<div class='col-sm-10'>"+
+                        "      <input type='text' class='form-control' id='idmod' name='idAdmin' placeholder='ID' readonly required>"+
+                        "</div>"+
+                  "</div>"+
+                  
+                  "<div class='form-group row'>"+
+                  "    <label for='email' class='col-sm-2 col-form-label'>Correo</label>"+
+                  "    <div class='col-sm-10'>"+
+                  "      <input type='email' class='form-control' id='emailmod' name='email' placeholder='Email' maxlength='45' required>"+
+                  "    </div>"+
+                  "</div>"+
+                  "<div class='form-group row'>"+
+                  "    <label for='password' class='col-sm-2 col-form-label'>Password</label>"+
+                  "    <div class='col-sm-10'>"+
+                  "      <input type='password' class='form-control' id='passwordmod' name='password' placeholder='Password' maxlength='45' required>"+
+                  "    </div>"+
+                  "</div>"+
+                  "<div class='form-group row'>"+
+                  "    <label for='name' class='col-sm-2 col-form-label'>Nombre</label>"+
+                  "    <div class='col-sm-10'>"+
+                  "      <input type='text' class='form-control' id='namemod' name='name' maxlength='250' placeholder='Nombre' required>"+
+                  "    </div>"+
+                  "</div>"+
+                  "</div><br><br>"+
+                  "<button type='submit' id='btn' class='btn btn-primary'>Registrar</button>"+
+                  "</form><br><br>"+
+                  "<div id='tabla'></div>";
+
+
+
+
 function mostrarEquipo(){
     let contenido="<h1 class='mt-4'>Grupo 34 Equipo 8</h1>"+
         "<table class='table table-dark'>"+
@@ -412,6 +517,9 @@ function agregarClientes(){
                   restGet("/Client/all");
                   document.getElementById("contenedor").innerHTML=frmCliente;
 }
+function agregarInforme(){
+    document.getElementById("contenedor").innerHTML=frmInformes;
+}
 function agregarReserva(){
     restGet("/Reservation/all");
     document.getElementById("contenedor").innerHTML=frmReserva;
@@ -432,6 +540,18 @@ function agregarReserva(){
 
 
 }
+//04/11/2021
+function agregarInformes(){
+$("#contenedor").html(
+    "<form>"+
+    "</form>"
+)
+}
+function agregarAdmin(){
+    restGet("/Admin/all");
+    document.getElementById("contenedor").innerHTML=frmAdmin;
+}
+/*fin 04/11/2021*/
 function restAdd(formulario,destino){
     let destinoRest="";
     let titulo;
@@ -451,6 +571,12 @@ function restAdd(formulario,destino){
             mensajetxt='Agregado Correctamente';
             icono='success';
             break;
+        case 'admin':
+                destinoRest="/Admin/save";
+                titulo='Usuario';
+                mensajetxt='Agregado Correctamente';
+                icono='success';
+                break;
         case 'message':
             destinoRest="/Message/save";
             titulo='Mensaje';
@@ -489,7 +615,7 @@ function restAdd(formulario,destino){
             break;
     }
     datos=JSON.stringify(datos)
-    //console.log(datos);    
+    console.log(datos);    
     $.ajax({
         url:urlgeneral+destinoRest,
         type:"POST",
@@ -514,15 +640,16 @@ function restAdd(formulario,destino){
                             case 'reservation':
                                 agregarReserva();
                                 break;
+                            case 'admin':
+                                agregarAdmin()
+                                break;
                         }
-
             },error: function (jqXHR, exception) {
                 console.log(jqXHR);
                 console.log(exception)
             }
         });
 }
-
 function restUpd(formulario,destino){
     let destinoRest="";
     let titulo;
@@ -551,6 +678,12 @@ function restUpd(formulario,destino){
             mensajetxt='Actualizado Correctamente';
             icono='success';
             break;
+        case 'admin':
+            destinoRest="/Admin/update";
+            titulo='Usurio';
+            mensajetxt='Actualizado Correctamente';
+            icono='success';
+            break;
         case 'message':
             destinoRest="/Message/update";
             titulo='Mensaje';
@@ -575,7 +708,7 @@ function restUpd(formulario,destino){
             icono='success';
             break;
     }
-    
+    console.log(datos)
     let saliJSON=JSON.stringify(datos);
     console.log(saliJSON);
     //console.log(urlgeneral+destinoRest)
@@ -586,6 +719,7 @@ function restUpd(formulario,destino){
         headers:{"Content-Type": "application/json"},
         success:function(respuesta){
             console.log(respuesta)
+                console.log(respuesta)
             mensaje(titulo,mensajetxt,icono)
             switch(destino){
                             case 'moto':
@@ -596,6 +730,10 @@ function restUpd(formulario,destino){
                                 agregarClientes();
                                 cerrarm();
                                 break;
+                            case 'admin':
+                                    agregarAdmin();
+                                    cerrarm();
+                                    break;
                             case 'message':
                                 agregarMensajes();
                                 cerrarm();
@@ -607,7 +745,6 @@ function restUpd(formulario,destino){
             }
         });
 }
-
 function mensaje(titulo,mensaje,icono){
     Swal.fire(
                 titulo,
@@ -639,6 +776,12 @@ function restGet(origen,id){
             }
             if(origen=="/Client/all"){
                 document.getElementById("tabla").innerHTML=creartablacliente(respuesta);
+                if(document.getElementById("id")){
+                    document.getElementById("id").value=parseInt(maximo)+1;
+                }
+            }
+            if(origen=="/Admin/all"){
+                document.getElementById("tabla").innerHTML=creartablaadmin(respuesta);
                 if(document.getElementById("id")){
                     document.getElementById("id").value=parseInt(maximo)+1;
                 }
@@ -784,7 +927,6 @@ function creartablamoto(itemsC){
                
 return tabla;
 }
-
 function creartablacliente(itemsC){
     
     let tabla="<table class='table table-bordered table-dark'>"+
@@ -818,7 +960,44 @@ function creartablacliente(itemsC){
                     "    </tr>";
         };  
         tabla+="</tbody>"+
-               "</table>";
+                "</table>";
+return tabla;
+}
+
+function creartablaadmin(itemsC){
+    
+    let tabla="<table class='table table-bordered table-dark'>"+
+                        "<thead>"+
+                        "    <tr>";
+                        let cabeza=['NAME','EMAIL','ELIMINAR','EDITAR'];
+                        
+                        for(let i=0;i<cabeza.length;i++){
+                            tabla+="      <th scope='col'>"+cabeza[i]+"</th>";
+                            
+                        }
+                        tabla+="    </tr>";
+                        tabla+="</thead>";
+                        tabla+="<tbody>";
+        for(let i=0;i<itemsC.length;i++){
+            tabla+="<tr>"+
+                    //"      <th scope='row'>"+itemsC[i].idClient+"</th>"+
+                    "      <td>"+itemsC[i].name+"</td>"+
+                    "      <td>"+itemsC[i].email+"</td>"+
+                   // "      <td>"+itemsC[i].name+"</td>"+
+                    "      <td data-titulo=\"MOD: \" class=\"text-center\">"+
+                    "        <span class=\"btn btn-danger btn-xs\" disabled onclick=\"eliminar("+itemsC[i].idAdmin+",'/Admin')\">"+
+                    "        <span class=\"fas fa-trash-alt\"></span>"+
+                    "        </span>"+
+                    "    </td>"+
+                    "      <td data-titulo=\"MOD: \" class=\"text-center\">"+
+                    "        <span class=\"btn btn-info btn-xs\" disabled onclick=\"callModal("+itemsC[i].idAdmin+",'admin')\">"+
+                    "        <span class=\"fas fa-edit\"></span>"+
+                    "        </span>"+
+                    "    </td>"+
+                    "    </tr>";
+        };  
+        tabla+="</tbody>"+
+                "</table>";
 return tabla;
 }
 
@@ -857,7 +1036,6 @@ function creartablamensaje(itemsC){
                
 return tabla;
 }
-
 function creartablacategory(itemsC){
     let tabla="<table class='table table-bordered table-dark'>"+
     "<thead>"+
@@ -894,7 +1072,6 @@ tabla+="</tbody>"+
 return tabla;
 
 }
-
 function formToJSON(f) {
     var fd = $(f).serializeArray();
     var d = {};
@@ -928,7 +1105,6 @@ function eliminar(ids,origen){
     });
 }
 function cerrarm(){$('#exampleModal').modal('hide');}
-
 function callModal(id,formulario){
     let forma;
     var datos;
@@ -954,12 +1130,6 @@ function callModal(id,formulario){
                     document.getElementById("descriptionmod").value=respuesta.description;
                 }
                 });
- 
- 
-        
-            
-            
-                    
             break;
         case "client":
             forma=frmClienteMod;
@@ -1017,6 +1187,27 @@ function callModal(id,formulario){
                 }
                 });
             break;
+        case "admin":
+            forma=frmAdminmod;
+            origen="/Admin/get/";
+            document.getElementById('actualizar').innerHTML=forma;
+            $.ajax({
+                url:urlgeneral+origen+id,
+                type:"GET",
+                async: false,
+                datatype:"JSON",
+                success:function(respuesta){
+                    console.log(respuesta)
+                    //console.log(document.getElementById("regUsuariomod"));
+                    document.getElementById("idmod").value=respuesta.idAdmin;
+                    document.getElementById("namemod").value=respuesta.name;
+                    document.getElementById("emailmod").value=respuesta.email;
+                    document.getElementById('passwordmod').value=respuesta.password;
+                    //document.getElementById("agemod").value=respuesta.age;
+                }
+                });
+            break;
+            
         case "reservation":
             forma=frmReservamod
             origen="/Reservation/get/"; 
@@ -1038,10 +1229,9 @@ function callModal(id,formulario){
     $('#exampleModal').modal('show'); // abrir
 
 }
-
 function cargarcategorias(){
     $.ajax({
-        url:"http://132.226.254.102:8080/api/Category/all",
+        url:urlgeneral+"/Category/all",
         type:"GET",
         async: false,
         datatype:"JSON",
@@ -1063,7 +1253,6 @@ function cargarcategorias(){
         }
         });
 }
-
 function cargarselect(origen,control){
     $.ajax({
         url:urlgeneral+origen,
@@ -1091,3 +1280,63 @@ function cargarselect(origen,control){
         });
 }
 
+function informe(){
+    let origen="/Reservation/report-dates/";
+    let fechainicial=$("#fechainicial").val();
+    let fechafinal=$("#fechafinal").val();
+    if(fechainicial<fechafinal && fechainicial!=fechafinal ){
+        $.ajax({
+            url:urlgeneral+origen+fechainicial+"/"+fechafinal,
+            type:"GET",
+            async: false,
+            datatype:"JSON",
+            success:function(respuesta){
+                let entrada=respuesta;
+            if(entrada.length!=undefined || entrada.length!=null){
+                mensaje("Conteo de reservas: "+ entrada.length.toString(),'',"success")
+            }else{alert(":(")}
+               
+            }
+            });
+    }else{
+        mensaje("Error en las fechas","la Fecha inicial no puede ser mayor o igual que la final","error")
+    }
+}
+function informeStatus(){
+    let origen="/Reservation/report-status";
+    $.ajax({
+        url:urlgeneral+origen,
+        type:"GET",
+        async: false,
+        datatype:"JSON",
+        success:function(respuesta){
+            let entrada=respuesta;
+            console.log(entrada)
+       
+            mensaje("Conteo de reservas: \nCaceladas: "+ entrada.cancelled.toString()+
+                     "\nCompletadas: " + entrada.completed.toString()
+            ,'',"success")
+        }
+        });
+
+}
+function informeCliente(){
+    let origen="/Reservation/report-clients";
+    $.ajax({
+        url:urlgeneral+origen,
+        type:"GET",
+        async: false,
+        datatype:"JSON",
+        success:function(respuesta){
+            let entradacli=respuesta;
+            console.log(entradacli)
+            let prncliente="Top 3\n";
+            for(let i=0;i<entradacli.length;i++){
+                console.log(entradacli[i].client.name)
+                prncliente+="Nombre: "+entradacli[i].client.name+"\nNo Reservas: "+entradacli[i].total+"\n";
+            }
+            mensaje(prncliente,'',"success")
+        }
+        });
+
+}
